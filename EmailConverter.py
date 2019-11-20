@@ -29,6 +29,7 @@ for message in mailbox.mbox('mail.mbox'):
             dateArr = dateArr[:4]
             dateStr = " ".join(dateArr)
             Date = datetime.strptime(dateStr, '%d %b %Y %X').strftime('%x %X')
+
         # Handle encoded chars in Subject
         try:
             make_header(decode_header(message['subject']))
@@ -36,6 +37,7 @@ for message in mailbox.mbox('mail.mbox'):
             Subject = message['subject']
         else:
             Subject = make_header(decode_header(message['subject']))
+
         # Handle encoded chars in From Name
         try:
             make_header(decode_header(message['from']))
