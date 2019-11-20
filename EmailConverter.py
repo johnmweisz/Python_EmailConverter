@@ -15,7 +15,7 @@ emails = {}
 # Loops through all messages in mbox file
 for message in mailbox.mbox('mail.mbox'):
     # Prevents duplicates
-    if not message['from'] in emails:
+    if not str(message['from']) in emails:
         # Date formatting
         sDate = str(message['date']).replace(',', '')
         dateArr = sDate.split()
@@ -32,11 +32,11 @@ for message in mailbox.mbox('mail.mbox'):
 
         # Handle encoded chars in Subject
         try:
-            make_header(decode_header(message['subject']))
+            make_header(decode_header(str(message['subject'])))
         except:
-            Subject = message['subject']
+            Subject = str(message['subject'])
         else:
-            Subject = make_header(decode_header(message['subject']))
+            Subject = make_header(decode_header(str(message['subject'])))
 
         # Handle encoded chars in From Name
         try:
