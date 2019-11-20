@@ -40,11 +40,11 @@ for message in mailbox.mbox('mail.mbox'):
 
         # Handle encoded chars in From Name
         try:
-            make_header(decode_header(message['from']))
+            make_header(decode_header(str(message['from']).replace('"', '')))
         except:
-            From = message['from']
+            From = str(message['from']).replace('"', '')
         else:
-            From = make_header(decode_header(message['from']))
+            From = make_header(decode_header(str(message['from']).replace('"', '')))
         
         # Write line to file
         writer.writerow([Date, From, Subject])
