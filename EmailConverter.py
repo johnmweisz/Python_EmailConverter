@@ -3,26 +3,38 @@ import csv
 from datetime import datetime
 from email.header import decode_header, make_header
 
+# Creates new CSV file
 writer = csv.writer(open("Converted.csv", "w"))
 emails = {}
 
 # Optional table header
 # writer.writerow(["Date", "From", "Subject"])
 
+# Loops through all messages in mbox file
 for message in mailbox.mbox('mail.mbox'):
+    # Prevents duplicates
     if not message['from'] in emails:
+        # Date formatting
+        sDate = str(message['date']).replace(',', '')
+        dateArr = sDate.split()
         try:
-            datetime.strptime(message['date'][:25], '%a, %d %b %Y %X').strftime('%x %X')
+            float(dateArr[0])
         except:
-            Date = message['date']
+            dateArr = dateArr[:5]
+            dateStr = " ".join(dateArr)
+            Date = datetime.strptime(dateStr, '%a %d %b %Y %X').strftime('%x %X')
         else:
-            Date = datetime.strptime(message['date'][:25], '%a, %d %b %Y %X').strftime('%x %X')
+            dateArr = dateArr[:4]
+            dateStr = " ".join(dateArr)
+            Date = datetime.strptime(dateStr, '%d %b %Y %X').strftime('%x %X')
+        # Handle encoded chars in Subject
         try:
             make_header(decode_header(message['subject']))
         except:
             Subject = message['subject']
         else:
             Subject = make_header(decode_header(message['subject']))
+        # Handle encoded chars in From Name
         try:
             make_header(decode_header(message['from']))
         except:
@@ -30,6 +42,8 @@ for message in mailbox.mbox('mail.mbox'):
         else:
             From = make_header(decode_header(message['from']))
         
+        # Write line to file
         writer.writerow([Date, From, Subject])
 
+        # Add email to emails dictionary
         emails[str(message['from'])] = 1
