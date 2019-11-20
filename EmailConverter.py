@@ -22,4 +22,4 @@ for message in mailbox.mbox('mail.mbox'):
         
         writer.writerow([ message['date'], From, Subject ])
 
-        emails[str(From)] = 1
+        emails[str(message['from'])] = 1
