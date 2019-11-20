@@ -12,11 +12,11 @@ emails = {}
 for message in mailbox.mbox('mail.mbox'):
     if not message['from'] in emails:
         try:
-            datetime.strptime(message['date'][:-6], '%a, %d %b %Y %X').strftime('%x %X')
+            datetime.strptime(message['date'][:25], '%a, %d %b %Y %X').strftime('%x %X')
         except:
             Date = message['date']
         else:
-            Date = datetime.strptime(message['date'][:-6], '%a, %d %b %Y %X').strftime('%x %X')
+            Date = datetime.strptime(message['date'][:25], '%a, %d %b %Y %X').strftime('%x %X')
         try:
             make_header(decode_header(message['subject']))
         except:
