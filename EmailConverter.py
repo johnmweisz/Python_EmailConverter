@@ -15,7 +15,7 @@ emails = {}
 # Loops through all messages in mbox file
 for message in mailbox.mbox('mail.mbox'):
     # Prevents duplicates
-    if not str(message['from']) in emails:
+    if not str(message['from']).lower() in emails:
         # Date formatting
         sDate = str(message['date']).replace(',', '')
         dateArr = sDate.split()
@@ -50,4 +50,4 @@ for message in mailbox.mbox('mail.mbox'):
         writer.writerow([Date, From, Subject])
 
         # Add email to emails dictionary
-        emails[str(message['from'])] = 1
+        emails[str(message['from']).lower()] = 1
