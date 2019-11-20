@@ -5,6 +5,8 @@ from email.header import decode_header, make_header
 
 # Creates new CSV file
 writer = csv.writer(open("Converted.csv", "w"))
+
+# Dictionary to store emails added
 emails = {}
 
 # Optional table header
