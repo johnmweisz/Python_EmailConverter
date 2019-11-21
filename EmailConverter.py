@@ -13,7 +13,7 @@ emails = {}
 # writer.writerow(["Date", "From", "Subject"])
 
 # Loops through all messages in mbox file
-for message in mailbox.mbox('mail.mbox'):
+for message in mailbox.mbox('mail2.mbox'):
     # Prevents duplicates
     if not str(message['from']).lower() in emails:
         # Date formatting
@@ -24,11 +24,21 @@ for message in mailbox.mbox('mail.mbox'):
         except:
             dateArr = dateArr[:5]
             dateStr = " ".join(dateArr)
-            Date = datetime.strptime(dateStr, '%a %d %b %Y %X').strftime('%x %X')
+            try:
+                datetime.strptime(dateStr, '%a %d %b %Y %X').strftime('%x %X')
+            except:
+                Date = dateStr
+            else:
+                Date = datetime.strptime(dateStr, '%a %d %b %Y %X').strftime('%x %X')
         else:
             dateArr = dateArr[:4]
             dateStr = " ".join(dateArr)
-            Date = datetime.strptime(dateStr, '%d %b %Y %X').strftime('%x %X')
+            try:
+                datetime.strptime(dateStr, '%d %b %Y %X').strftime('%x %X')
+            except:
+                Date = dateStr
+            else:
+                Date = datetime.strptime(dateStr, '%d %b %Y %X').strftime('%x %X')
 
         # Handle encoded chars in Subject
         try:
